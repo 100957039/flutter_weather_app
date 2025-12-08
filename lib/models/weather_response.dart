@@ -17,8 +17,8 @@ class WeatherResponse {
 
   factory WeatherResponse.fromJson(Map<String, dynamic> json) {
     return WeatherResponse(
-      lat: json['lat'],
-      lon: json['lon'],
+      lat: json['lat'].toDouble(),
+      lon: json['lon'].toDouble(),
       timezone: json['timezone'],
       timezoneOffset: json['timezone_offset'],
       current: CurrentWeather.fromJson(json['current']),
@@ -69,15 +69,15 @@ class CurrentWeather {
       dt: json['dt'],
       sunrise: json['sunrise'],
       sunset: json['sunset'],
-      temp: json['temp'],
-      feelsLike: json['feels_like'],
+      temp: json['temp'].toDouble(),
+      feelsLike: json['feels_like'].toDouble(),
       pressure: json['pressure'],
       humidity: json['humidity'],
-      dewPoint: json['dew_point'],
-      uvi: json['uvi'],
+      dewPoint: json['dew_point'].toDouble(),
+      uvi: json['uvi'].toDouble(),
       clouds: json['clouds'],
       visibility: json['visibility'],
-      windSpeed: json['wind_speed'],
+      windSpeed: json['wind_speed'].toDouble(),
       windDeg: json['wind_deg'],
       windGust: json['wind_gust']?.toDouble(),
       weather: (json['weather'] as List)
@@ -141,24 +141,24 @@ class DailyWeather {
       sunset: json['sunset'],
       moonrise: json['moonrise'],
       moonset: json['moonset'],
-      moonPhase: json['moon_phase'],
+      moonPhase: json['moon_phase'].toDouble(),
       summary: json['summary'],
       temp: Temp.fromJson(json['temp']),
       feelsLike: FeelsLike.fromJson(json['feels_like']),
       pressure: json['pressure'],
       humidity: json['humidity'],
-      dewPoint: json['dew_point'],
-      windSpeed: json['wind_speed'],
+      dewPoint: json['dew_point'].toDouble(),
+      windSpeed: json['wind_speed'].toDouble(),
       windDeg: json['wind_deg'],
       windGust: json['wind_gust']?.toDouble(),
       weather: (json['weather'] as List)
           .map((weather) => Weather.fromJson(weather))
           .toList(),
       clouds: json['clouds'],
-      pop: json['pop'],
+      pop: json['pop'].toDouble(),
       rain: json['rain']?.toDouble(),
       snow: json['snow']?.toDouble(),
-      uvi: json['uvi'],
+      uvi: json['uvi'].toDouble(),
     );
   }
 }
@@ -182,12 +182,12 @@ class Temp {
 
   factory Temp.fromJson(Map<String, dynamic> json) {
     return Temp(
-      day: json['day'],
-      min: json['min'],
-      max: json['max'],
-      night: json['night'],
-      eve: json['eve'],
-      morn: json['morn'],
+      day: json['day'].toDouble(),
+      min: json['min'].toDouble(),
+      max: json['max'].toDouble(),
+      night: json['night'].toDouble(),
+      eve: json['eve'].toDouble(),
+      morn: json['morn'].toDouble(),
     );
   }
 }
@@ -207,10 +207,10 @@ class FeelsLike {
 
   factory FeelsLike.fromJson(Map<String, dynamic> json) {
     return FeelsLike(
-      day: json['day'],
-      night: json['night'],
-      eve: json['eve'],
-      morn: json['morn'],
+      day: json['day'].toDouble(),
+      night: json['night'].toDouble(),
+      eve: json['eve'].toDouble(),
+      morn: json['morn'].toDouble(),
     );
   }
 }
@@ -237,3 +237,5 @@ class Weather {
     );
   }
 }
+
+
