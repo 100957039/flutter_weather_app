@@ -86,7 +86,7 @@ class WeatherService {
   }
 
   String getWeekdayName(int timestamp) {
-    DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp, isUtc: true);
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
     int weekday = date.weekday;
 
     switch (weekday) {
@@ -107,5 +107,12 @@ class WeatherService {
       default:
         return 'Unknown';
     }
+  }
+
+  String formatTime(int timestamp) {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp * 1000);
+    String hours = date.hour.toString().padLeft(2, '0');
+    String minutes = date.minute.toString().padLeft(2, '0');
+    return '$hours:$minutes';
   }
 }

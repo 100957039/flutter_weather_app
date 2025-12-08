@@ -73,6 +73,14 @@ class _WeatherPageState extends State<WeatherPage> {
                       color: Colors.white
                     )
                   ),
+                  Text(
+                    _weatherService.getWeekdayName(_weather!.current.dt), 
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white
+                    )
+                  ),
                   Lottie.asset(
                     _weatherService.getWeatherAnimation(_weather?.current.weather[0].main),
                     width: 200,
@@ -100,8 +108,9 @@ class _WeatherPageState extends State<WeatherPage> {
             ),
           ),
 
+
           // Daily Weather Forcast
-          ..._weather!.daily.take(5).map((day) {
+          ..._weather!.daily.skip(1).take(5).map((day) {
             return Padding(
               padding: const EdgeInsets.fromLTRB(48, 16, 48, 16),
               child: Container(
@@ -160,7 +169,7 @@ class _WeatherPageState extends State<WeatherPage> {
                       MaterialPageRoute(
                         builder: (_) => DetailScreen(
                           weatherService: _weatherService,
-                          weatherResponse: _weather!,
+                          day: day,
                         ),
                       ),
                     );
@@ -176,29 +185,104 @@ class _WeatherPageState extends State<WeatherPage> {
 }
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({super.key, required this.weatherService, required this.weatherResponse});
+  const DetailScreen({super.key, required this.weatherService, required this.day});
   
-  final WeatherResponse weatherResponse;
+  final DailyWeather day;
   final WeatherService weatherService;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(weatherService.getWeekdayName(weatherResponse.daily[0].dt)),),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.white,),
+        title: Text(weatherService.getWeekdayName(day.dt),
+          style: const TextStyle(color: Colors.white),
+        ), 
+        backgroundColor: Colors.blueGrey[800],
+      ),
+      backgroundColor: Colors.blueGrey[600],
       body: Padding(
         padding:  const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-            Lottie.asset(
-              weatherService.getWeatherAnimation(weatherResponse.daily[0].weather[0].main),
-              width: 200,
-              height: 200,
-              fit: BoxFit.fill,
-              repeat: true,
-            ),
-          ],
+        child: Center(
+          child: Column(
+            children: [
+              Lottie.asset(
+                weatherService.getWeatherAnimation(day.weather[0].main),
+                width: 200,
+                height: 200,
+                fit: BoxFit.fill,
+                repeat: true,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.blueGrey[800],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        day.weather[0].main,
+                        style: const TextStyle(
+                          fontSize: 28,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Min Temp: ${day.temp.min.round()}°C',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'Max Temp: ${day.temp.max.round()}°C',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'Humidity: ${day.humidity}%',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'Wind Speed: ${day.windSpeed} m/s',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        'UV Index: ${day.uvi}',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text('Sunrise: ${weatherService.formatTime(day.sunrise)}',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text('Sunset: ${weatherService.formatTime(day.sunset)}',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         )
       )
     );
