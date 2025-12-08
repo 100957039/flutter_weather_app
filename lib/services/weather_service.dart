@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 class WeatherService {
 
   static const BASE_URL = "https://api.openweathermap.org/data/3.0/onecall";
+  static const GEOCODE_URL = "http://api.openweathermap.org/geo/1.0/reverse";
   final String apiKey;
 
   WeatherService(this.apiKey);
@@ -35,5 +36,15 @@ class WeatherService {
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 
     return position;
+  }
+
+  Future<WeatherLocation> getCurrentCity(double lat, double lon) async {
+    final response = await http.get(Uri.parse('$GEOCODE_URL?lat=$lat&lon=$lon&appid=$apiKey'));
+    if (response.statusCode == 200) {
+      final List<dynamic> location = jsonDecode(response.body);
+      return WeatherLocation.fromJson(location[0]);
+    } else {
+      throw Exception('Failed to load weather location');
+    }
   }
 }

@@ -238,4 +238,24 @@ class Weather {
   }
 }
 
+class WeatherLocation {
+  final String locationName;
+  final String country;
+  final String? state;
+
+  WeatherLocation({
+    required this.locationName,
+    required this.country,
+    this.state,
+  });
+
+  factory WeatherLocation.fromJson(Map<String, dynamic> json) {
+    return WeatherLocation(
+      locationName: json['name'],
+      country: json['country'],
+      state: json['state']?.toString(),
+    );
+  }
+}
+
 
