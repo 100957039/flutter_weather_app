@@ -14,7 +14,7 @@ class WeatherService {
   
   Future<WeatherResponse> getWeather(double lat, double lon) async {
     
-    final response = await http.get(Uri.parse('$BASE_URL?lat=$lat&lon=$lon&appid=$apiKey'));
+    final response = await http.get(Uri.parse('$BASE_URL?lat=$lat&lon=$lon&appid=$apiKey&units=metric'));
     if (response.statusCode == 200) {
       return WeatherResponse.fromJson(jsonDecode(response.body));
     } else {
