@@ -47,4 +47,65 @@ class WeatherService {
       throw Exception('Failed to load weather location');
     }
   }
+
+  String getWeatherAnimation(String? weatherCondition) {
+    switch (weatherCondition?.toLowerCase()) {
+      case 'clear':
+        return 'assets/sunny.json';
+      case 'fog':
+        return 'assets/fog.json';
+      case 'mist':
+        return 'assets/fog.json';
+      case 'smoke':
+        return 'assets/fog.json';
+      case 'haze':
+        return 'assets/fog.json';
+      case 'dust':
+        return 'assets/fog.json';
+      case 'sand':
+        return 'assets/fog.json';
+      case 'ash':
+        return 'assets/fog.json';
+      case 'tornado':
+        return 'assets/fog.json';
+      case 'squall':
+        return 'assets/snowing.json';
+      case 'drizzle':
+        return 'assets/rain.json';
+      case 'rain':
+        return 'assets/rain.json';
+      case 'snow':
+        return 'assets/snowing.json';
+      case 'clouds':
+        return 'assets/cloudy.json';
+      case 'thunderstorm':
+        return 'assets/thunderstorm.json';
+      default:
+        return 'assets/unknown.json';
+    }
+  }
+
+  String getWeekdayName(int timestamp) {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(timestamp, isUtc: true);
+    int weekday = date.weekday;
+
+    switch (weekday) {
+      case 1:
+        return 'Monday';
+      case 2:
+        return 'Tuesday';
+      case 3:
+        return 'Wednesday';
+      case 4:
+        return 'Thursday';
+      case 5:
+        return 'Friday';
+      case 6:
+        return 'Saturday';
+      case 7:
+        return 'Sunday';
+      default:
+        return 'Unknown';
+    }
+  }
 }
